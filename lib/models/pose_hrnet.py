@@ -286,7 +286,10 @@ class PoseHighResolutionNet(nn.Module):
                                bias=False)
         self.bn2 = nn.BatchNorm2d(64, momentum=BN_MOMENTUM)
         self.relu = nn.ReLU(inplace=True)
-        self.layer1 = self._make_layer(Bottleneck, 64, 4)
+        self.stage1_cfg = cfg['MODEL']['EXTRA']['STAGE1']
+        block_stage1=self.stage1_cfg['NUM_BLOCKS'][0]
+        self.layer1 = self._make_layer(Bottleneck, 64, block_stage1)
+      #  self.layer1 = self._make_layer(Bottleneck, 64, 4)
 
         self.stage2_cfg = cfg['MODEL']['EXTRA']['STAGE2']
         num_channels = self.stage2_cfg['NUM_CHANNELS']
